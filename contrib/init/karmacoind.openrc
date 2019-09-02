@@ -1,0 +1,92 @@
+#!/sbin/openrc-run
+
+# backward compatibility for existing gentoo layout 
+#
+if [ -d "/var/lib/karmacoin/.karmacoin" ]; then
+	KARMACOIND_DEFAULT_DATADIR="/var/lib/karmacoin/.karmacoin"
+else
+	KARMACOIND_DEFAULT_DATADIR="/var/lib/karmacoind"
+fi
+
+KARMACOIND_CONFIGFILE=${KARMACOIND_CONFIGFILE:-/etc/karmacoin/karmacoin.conf}
+KARMACOIND_PIDDIR=${KARMACOIND_PIDDIR:-/var/run/karmacoind}
+KARMACOIND_PIDFILE=${KARMACOIND_PIDFILE:-${KARMACOIND_PIDDIR}/karmacoind.pid}
+KARMACOIND_DATADIR=${KARMACOIND_DATADIR:-${KARMACOIND_DEFAULT_DATADIR}}
+KARMACOIND_USER=${KARMACOIND_USER:-${KARMACOIN_USER:-karmacoin}}
+KARMACOIND_GROUP=${KARMACOIND_GROUP:-karmacoin}
+KARMACOIND_BIN=${KARMACOIND_BIN:-/usr/bin/karmacoind}
+KARMACOIND_NICE=${KARMACOIND_NICE:-${NICELEVEL:-0}}
+KARMACOIND_OPTS="${KARMACOIND_OPTS:-${KARMACOIN_OPTS}}"
+
+name="Karmacoin Core Daemon"
+description="Karmacoin cryptocurrency P2P network daemon"
+
+command="/usr/bin/karmacoind"
+command_args="-pid=\"${KARMACOIND_PIDFILE}\" \
+		-conf=\"${KARMACOIND_CONFIGFILE}\" \
+		-datadir=\"${KARMACOIND_DATADIR}\" \
+		-daemon \
+		${KARMACOIND_OPTS}"
+
+required_files="${KARMACOIND_CONFIGFILE}"
+start_stop_daemon_args="-u ${KARMACOIND_USER} \
+			-N ${KARMACOIND_NICE} -w 2000"
+pidfile="${KARMACOIND_PIDFILE}"
+
+# The retry schedule to use when stopping the daemon. Could be either
+# a timeout in seconds or multiple signal/timeout pairs (like
+# "SIGKILL/180 SIGTERM/300")
+retry="${KARMACOIND_SIGTERM_TIMEOUT}"
+
+depend() {
+	need localmount net
+}
+
+# verify
+# 1) that the datadir exists and is writable (or create it)
+# 2) that a directory for the pid exists and is writable
+# 3) ownership and permissions on the config file
+start_pre() {
+	checkpath \
+	-d \
+	--mode 0750 \
+	--owner "${KARMACOIND_USER}:${KARMACOIND_GROUP}" \
+	"${KARMACOIND_DATADIR}"
+
+	checkpath \
+	-d \
+	--mode 0755 \
+	--owner "${KARMACOIND_USER}:${KARMACOIND_GROUP}" \
+	"${KARMACOIND_PIDDIR}"
+
+	checkpath -f \
+	-o ${KARMACOIND_USER}:${KARMACOIND_GROUP} \
+	-m 0660 \
+	${KARMACOIND_CONFIGFILE}
+
+	checkconfig || return 1
+}
+
+checkconfig()
+{
+	if ! grep -qs '^rpcpassword=' "${KARMACOIND_CONFIGFILE}" ; then
+		eerror ""
+		eerror "ERROR: You must set a secure rpcpassword to run karmacoind."
+		eerror "The setting must appear in ${KARMACOIND_CONFIGFILE}"
+		eerror ""
+		eerror "This password is security critical to securing wallets "
+		eerror "and must not be the same as the rpcuser setting."
+		eerror "You can generate a suitable random password using the following "
+		eerror "command from the shell:"
+		eerror ""
+		eerror "bash -c 'tr -dc a-zA-Z0-9 < /dev/urandom | head -c32 && echo'"
+		eerror ""
+		eerror "It is recommended that you also set alertnotify so you are "
+		eerror "notified of problems:"
+		eerror ""
+		eerror "ie: alertnotify=echo %%s | mail -s \"Karmacoin Alert\"" \
+			"admin@foo.com"
+		eerror ""
+		return 1
+	fi
+}

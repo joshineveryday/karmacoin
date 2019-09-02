@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# Copyright (c) 2018 The Bitcoin Core developers
+# Copyright (c) 2018 The Karmacoin Core developers
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
 #
@@ -14,9 +14,9 @@ EXPECTED_CIRCULAR_DEPENDENCIES=(
     "policy/fees -> txmempool -> policy/fees"
     "qt/addresstablemodel -> qt/walletmodel -> qt/addresstablemodel"
     "qt/bantablemodel -> qt/clientmodel -> qt/bantablemodel"
-    "qt/bitcoingui -> qt/utilitydialog -> qt/bitcoingui"
-    "qt/bitcoingui -> qt/walletframe -> qt/bitcoingui"
-    "qt/bitcoingui -> qt/walletview -> qt/bitcoingui"
+    "qt/karmacoingui -> qt/utilitydialog -> qt/karmacoingui"
+    "qt/karmacoingui -> qt/walletframe -> qt/karmacoingui"
+    "qt/karmacoingui -> qt/walletview -> qt/karmacoingui"
     "qt/clientmodel -> qt/peertablemodel -> qt/clientmodel"
     "qt/paymentserver -> qt/walletmodel -> qt/paymentserver"
     "qt/recentrequeststablemodel -> qt/walletmodel -> qt/recentrequeststablemodel"

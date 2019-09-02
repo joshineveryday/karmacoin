@@ -1,10 +1,10 @@
 // Copyright (c) 2009-2010 Satoshi Nakamoto
-// Copyright (c) 2009-2018 The Bitcoin Core developers
+// Copyright (c) 2009-2018 The Karmacoin Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef BITCOIN_LOGGING_H
-#define BITCOIN_LOGGING_H
+#ifndef KARMACOIN_LOGGING_H
+#define KARMACOIN_LOGGING_H
 
 #include <fs.h>
 #include <tinyformat.h>
@@ -163,4 +163,4 @@ static inline void LogPrint(const BCLog::LogFlags& category, const Args&... args
     }
 }
 
-#endif // BITCOIN_LOGGING_H
+#endif // KARMACOIN_LOGGING_H

@@ -1,0 +1,33 @@
+# /etc/conf.d/karmacoind: config file for /etc/init.d/karmacoind
+
+# Config file location
+#KARMACOIND_CONFIGFILE="/etc/karmacoin/karmacoin.conf"
+
+# What directory to write pidfile to?  (created and owned by $KARMACOIND_USER)
+#KARMACOIND_PIDDIR="/var/run/karmacoind"
+
+# What filename to give the pidfile
+#KARMACOIND_PIDFILE="${KARMACOIND_PIDDIR}/karmacoind.pid"
+
+# Where to write karmacoind data (be mindful that the blockchain is large)
+#KARMACOIND_DATADIR="/var/lib/karmacoind"
+
+# User and group to own karmacoind process
+#KARMACOIND_USER="karmacoin"
+#KARMACOIND_GROUP="karmacoin"
+
+# Path to karmacoind executable
+#KARMACOIND_BIN="/usr/bin/karmacoind"
+
+# Nice value to run karmacoind under
+#KARMACOIND_NICE=0
+
+# Additional options (avoid -conf and -datadir, use flags above)
+#KARMACOIND_OPTS=""
+
+# The timeout in seconds OpenRC will wait for karmacoind to terminate
+# after a SIGTERM has been raised.
+# Note that this will be mapped as argument to start-stop-daemon's
+# '--retry' option, which means you can specify a retry schedule
+# here. For more information see man 8 start-stop-daemon.
+KARMACOIND_SIGTERM_TIMEOUT=60

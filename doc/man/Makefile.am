@@ -1,23 +1,23 @@
 dist_man1_MANS=
 
-if BUILD_BITCOIND
-  dist_man1_MANS+=bitcoind.1
+if BUILD_KARMACOIND
+  dist_man1_MANS+=karmacoind.1
 endif
 
 if ENABLE_QT
-  dist_man1_MANS+=bitcoin-qt.1
+  dist_man1_MANS+=karmacoin-qt.1
 endif
 
-if BUILD_BITCOIN_CLI
-  dist_man1_MANS+=bitcoin-cli.1
+if BUILD_KARMACOIN_CLI
+  dist_man1_MANS+=karmacoin-cli.1
 endif
 
-if BUILD_BITCOIN_TX
-  dist_man1_MANS+=bitcoin-tx.1
+if BUILD_KARMACOIN_TX
+  dist_man1_MANS+=karmacoin-tx.1
 endif
 
 if ENABLE_WALLET
-if BUILD_BITCOIN_WALLET
-  dist_man1_MANS+=bitcoin-wallet.1
+if BUILD_KARMACOIN_WALLET
+  dist_man1_MANS+=karmacoin-wallet.1
 endif
 endif

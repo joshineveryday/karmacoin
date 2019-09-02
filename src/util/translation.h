@@ -1,9 +1,9 @@
-// Copyright (c) 2019 The Bitcoin Core developers
+// Copyright (c) 2019 The Karmacoin Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef BITCOIN_UTIL_TRANSLATION_H
-#define BITCOIN_UTIL_TRANSLATION_H
+#ifndef KARMACOIN_UTIL_TRANSLATION_H
+#define KARMACOIN_UTIL_TRANSLATION_H
 
 #include <tinyformat.h>
 
@@ -39,4 +39,4 @@ inline bilingual_str _(const char* psz)
     return bilingual_str{psz, G_TRANSLATION_FUN ? (G_TRANSLATION_FUN)(psz) : psz};
 }
 
-#endif // BITCOIN_UTIL_TRANSLATION_H
+#endif // KARMACOIN_UTIL_TRANSLATION_H
